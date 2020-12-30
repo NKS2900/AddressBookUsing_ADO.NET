@@ -7,7 +7,10 @@ namespace AddressBookUsing_ADO.NET
         static void Main(string[] args)
         {
             Console.WriteLine("***AddressBook_Using_ADO.NET***");
-            
+            AddressBookRepo abrepo = new AddressBookRepo();
+            abrepo.CheckConnection();
+            Console.ReadKey();
+
         }
     }
 }
