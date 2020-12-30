@@ -36,8 +36,14 @@ namespace AddressBookUsing_ADO.NET
             abmodel1.BookName = "address002";
             abmodel1.AddressbookType = "office";
             abrepo.EditContactUsingFirstName(abmodel1);
+
+            AddressBookModel delmodel = new AddressBookModel();
+            delmodel.First_Name = "Ganesh";
+            abrepo.DeleteContactUsingName(delmodel);
+
             Console.ReadKey();
 
         }
+
     }
 }
