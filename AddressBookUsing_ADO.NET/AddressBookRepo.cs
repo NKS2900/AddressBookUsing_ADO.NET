@@ -203,5 +203,67 @@ namespace AddressBookUsing_ADO.NET
                 throw new Exception(e.Message);
             }
         }
+
+        public void SortPersonNameByCity()
+        {
+            try
+            {
+                AddressBookModel model = new AddressBookModel();
+                using (this.connection)
+                {
+                    using (SqlCommand command = new SqlCommand(
+                        @"SELECT * FROM address_book WHERE city = 'Pune' order by first_name; 
+                        SELECT * FROM address_book WHERE city = 'Latur' order by first_name, last_name;", connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            Console.WriteLine("Sorted Contact Using first name from Pune");
+                            Console.WriteLine("===========================================");
+                            while (reader.Read())
+                            {
+                                model.First_Name = reader.GetString(0);
+                                model.Last_Name = reader.GetString(1);
+                                model.Address = reader.GetString(2);
+                                model.City = reader.GetString(3);
+                                model.State = reader.GetString(4);
+                                model.Zip = reader.GetString(5);
+                                model.Phone_Number = reader.GetString(6);
+                                model.Email = reader.GetString(7);
+
+                                Console.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", model.First_Name, model.Last_Name, model.Address, model.City,
+                                        model.State, model.Zip, model.Phone_Number, model.Email);
+                                Console.WriteLine("\n");
+                            }
+                            if (reader.NextResult())
+                            {
+                                Console.WriteLine("Sorted Contact Using First_Name from Latur");
+                                Console.WriteLine("==========================================="); ;
+                                while (reader.Read())
+                                {
+                                    model.First_Name = reader.GetString(0);
+                                    model.Last_Name = reader.GetString(1);
+                                    model.Address = reader.GetString(2);
+                                    model.City = reader.GetString(3);
+                                    model.State = reader.GetString(4);
+                                    model.Zip = reader.GetString(5);
+                                    model.Phone_Number = reader.GetString(6);
+                                    model.Email = reader.GetString(7);
+
+                                    Console.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", model.First_Name, model.Last_Name, model.Address, model.City,
+                                        model.State, model.Zip, model.Phone_Number, model.Email);
+                                    Console.WriteLine("\n");
+                                }
+                            }
+                        }
+                        connection.Close();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

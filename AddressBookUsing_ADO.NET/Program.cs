@@ -43,6 +43,7 @@ namespace AddressBookUsing_ADO.NET
 
             abrepo.RetrieveContactFromPerticularCityOrState();
             abrepo.AddressBookSizeByCityANDState();
+            abrepo.SortPersonNameByCity();
             Console.ReadKey();
 
         }
