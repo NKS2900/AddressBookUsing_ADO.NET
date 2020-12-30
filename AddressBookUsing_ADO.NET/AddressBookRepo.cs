@@ -265,5 +265,44 @@ namespace AddressBookUsing_ADO.NET
                 throw new Exception(e.Message);
             }
         }
+
+        public void GetNumberOfContactsCountByBookType()
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    using (SqlCommand command = new SqlCommand(
+                        @"SELECT COUNT(first_name) FROM address_book WHERE addressbooktype = 'family'; 
+                        SELECT COUNT(first_name) FROM address_book WHERE addressbooktype = 'friend';", connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int count = reader.GetInt32(0);                     
+                                Console.WriteLine("Number of Contacts From Addressbook_Type Family : ",+count);
+                                Console.WriteLine("\n");
+                            }
+                            if (reader.NextResult())
+                            {
+                                while (reader.Read())
+                                {
+                                    var count = reader.GetInt32(0);
+                                    Console.WriteLine("Number of Contacts From Addressbook_Type Friend : ",+count);
+                                    Console.WriteLine("\n");
+                                }
+                            }
+                        }
+                    }
+                    connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
