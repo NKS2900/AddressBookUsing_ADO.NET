@@ -19,15 +19,12 @@ namespace AddressBookUsing_ADO.NET
                 {
                     connection.Open();
                     Console.WriteLine("Database_Connected_Successfully....");
+                    connection.Close();
                 }
             }
             catch
             {
                 Console.WriteLine("Database_NOT_Connected!!!");
-            }
-            finally
-            {
-                this.connection.Close();
             }
         }
 
@@ -63,10 +60,6 @@ namespace AddressBookUsing_ADO.NET
             {
                 throw new Exception(e.Message);
             }
-            finally
-            {
-                this.connection.Close();
-            }
         }
 
         public void EditContactUsingFirstName(AddressBookModel model)
@@ -78,13 +71,12 @@ namespace AddressBookUsing_ADO.NET
                     string updateQuery = @"UPDATE address_book SET last_name = @Last_Name, city = @City, state = @State, email = @Email, bookname = @BookName, addressbooktype = @AddressbookType WHERE first_name = @First_Name;";
                     SqlCommand command = new SqlCommand(updateQuery, connection);
                     command.Parameters.AddWithValue("@First_Name", model.First_Name);
-                    command.Parameters.AddWithValue("@Last_Name", model.Last_Name);                    
+                    command.Parameters.AddWithValue("@Last_Name", model.Last_Name);
                     command.Parameters.AddWithValue("@City", model.City);
-                    command.Parameters.AddWithValue("@State", model.State);     
+                    command.Parameters.AddWithValue("@State", model.State);
                     command.Parameters.AddWithValue("@Email", model.Email);
                     command.Parameters.AddWithValue("@BookName", model.BookName);
                     command.Parameters.AddWithValue("@AddressbookType", model.AddressbookType);
-
                     connection.Open();
                     command.ExecuteNonQuery();
                     Console.WriteLine("Contact Updated successfully...");
@@ -94,10 +86,6 @@ namespace AddressBookUsing_ADO.NET
             catch (Exception e)
             {
                 throw new Exception(e.Message);
-            }
-            finally
-            {
-                this.connection.Close();
             }
         }
 
@@ -120,9 +108,62 @@ namespace AddressBookUsing_ADO.NET
             {
                 throw new Exception(e.Message);
             }
-            finally
+        }
+
+        public void RetrieveContactFromPerticularCityOrState()
+        {
+            try
             {
-                this.connection.Close();
+                AddressBookModel model = new AddressBookModel();
+                using (this.connection)
+                {
+                    using (SqlCommand command = new SqlCommand(
+                        @"SELECT * FROM address_book WHERE city = 'Latur' OR state = 'Maharashtra';
+                        SELECT * FROM address_book WHERE city = 'Beed' OR state = 'Goa'; ", connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                model.First_Name = reader.GetString(0);
+                                model.Last_Name = reader.GetString(1);
+                                model.Address = reader.GetString(2);
+                                model.City = reader.GetString(3);
+                                model.State = reader.GetString(4);
+                                model.Zip = reader.GetString(5);
+                                model.Phone_Number = reader.GetString(6);
+                                model.Email = reader.GetString(7);
+
+                                Console.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", model.First_Name, model.Last_Name, model.Address, model.City,
+                                    model.State, model.Zip, model.Phone_Number, model.Email);
+                                Console.WriteLine("\n");
+                            }
+                            if (reader.NextResult())
+                            {
+                                while (reader.Read())
+                                {
+                                    model.First_Name = reader.GetString(0);
+                                    model.Last_Name = reader.GetString(1);
+                                    model.Address = reader.GetString(2);
+                                    model.City = reader.GetString(3);
+                                    model.State = reader.GetString(4);
+                                    model.Zip = reader.GetString(5);
+                                    model.Phone_Number = reader.GetString(6);
+                                    model.Email = reader.GetString(7);
+
+                                    Console.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", model.First_Name, model.Last_Name, model.Address, model.City,
+                                        model.State, model.Zip, model.Phone_Number, model.Email);
+                                    Console.WriteLine("\n");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
             }
         }
     }

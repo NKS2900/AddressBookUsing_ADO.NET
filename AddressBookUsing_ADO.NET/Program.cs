@@ -8,7 +8,7 @@ namespace AddressBookUsing_ADO.NET
         {
             Console.WriteLine("***AddressBook_Using_ADO.NET***");
             AddressBookRepo abrepo = new AddressBookRepo();
-            //abrepo.CheckConnection();
+            abrepo.CheckConnection();
 
             AddressBookModel abmodel = new AddressBookModel();
             abmodel.First_Name = "Asif";
@@ -41,6 +41,7 @@ namespace AddressBookUsing_ADO.NET
             delmodel.First_Name = "Ganesh";
             abrepo.DeleteContactUsingName(delmodel);
 
+            abrepo.RetrieveContactFromPerticularCityOrState();
             Console.ReadKey();
 
         }
