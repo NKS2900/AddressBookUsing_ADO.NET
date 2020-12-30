@@ -282,7 +282,7 @@ namespace AddressBookUsing_ADO.NET
                             while (reader.Read())
                             {
                                 int count = reader.GetInt32(0);                     
-                                Console.WriteLine("Number of Contacts From Addressbook_Type Family : ",+count);
+                                Console.WriteLine("Number of Contacts From Addressbook_Type_Family : ",+count);
                                 Console.WriteLine("\n");
                             }
                             if (reader.NextResult())
@@ -290,7 +290,7 @@ namespace AddressBookUsing_ADO.NET
                                 while (reader.Read())
                                 {
                                     var count = reader.GetInt32(0);
-                                    Console.WriteLine("Number of Contacts From Addressbook_Type Friend : ",+count);
+                                    Console.WriteLine("Number of Contacts From Addressbook_Type_Friend : ",+count);
                                     Console.WriteLine("\n");
                                 }
                             }
