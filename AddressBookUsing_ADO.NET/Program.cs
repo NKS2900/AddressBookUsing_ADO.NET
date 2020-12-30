@@ -22,11 +22,20 @@ namespace AddressBookUsing_ADO.NET
             abmodel.BookName = "address002";
             abmodel.AddressbookType = "friend";
             bool result = abrepo.AddContact(abmodel);
-
             if (result)
                 Console.WriteLine("Record added successfully...");
             else
                 Console.WriteLine("Some problem is there...");
+
+            AddressBookModel abmodel1 = new AddressBookModel();
+            abmodel1.First_Name = "Dipak";
+            abmodel1.Last_Name = "Nagar";
+            abmodel1.City = "Latur";
+            abmodel1.State = "Maharashtra";
+            abmodel1.Email = "dpk@gmail.com";
+            abmodel1.BookName = "address002";
+            abmodel1.AddressbookType = "office";
+            abrepo.EditContactUsingFirstName(abmodel1);
             Console.ReadKey();
 
         }

@@ -68,5 +68,37 @@ namespace AddressBookUsing_ADO.NET
                 this.connection.Close();
             }
         }
+
+        public void EditContactUsingFirstName(AddressBookModel model)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    string updateQuery = @"UPDATE address_book SET last_name = @Last_Name, city = @City, state = @State, email = @Email, bookname = @BookName, addressbooktype = @AddressbookType WHERE first_name = @First_Name;";
+                    SqlCommand command = new SqlCommand(updateQuery, connection);
+                    command.Parameters.AddWithValue("@First_Name", model.First_Name);
+                    command.Parameters.AddWithValue("@Last_Name", model.Last_Name);                    
+                    command.Parameters.AddWithValue("@City", model.City);
+                    command.Parameters.AddWithValue("@State", model.State);     
+                    command.Parameters.AddWithValue("@Email", model.Email);
+                    command.Parameters.AddWithValue("@BookName", model.BookName);
+                    command.Parameters.AddWithValue("@AddressbookType", model.AddressbookType);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    Console.WriteLine("Contact Updated successfully...");
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
     }
 }
