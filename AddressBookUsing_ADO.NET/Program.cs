@@ -42,6 +42,7 @@ namespace AddressBookUsing_ADO.NET
             abrepo.DeleteContactUsingName(delmodel);
 
             abrepo.RetrieveContactFromPerticularCityOrState();
+            abrepo.AddressBookSizeByCityANDState();
             Console.ReadKey();
 
         }

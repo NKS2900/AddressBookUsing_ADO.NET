@@ -166,5 +166,42 @@ namespace AddressBookUsing_ADO.NET
                 throw new Exception(e.Message);
             }
         }
+
+        public void AddressBookSizeByCityANDState()
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    using (SqlCommand command = new SqlCommand(
+                        @"select count(first_name) from address_book WHERE city = 'Latur' AND state = 'Maharashtra'; 
+                        select count(first_name) from address_book WHERE city = 'Pune' AND state = 'Maharashtra';", connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int count = reader.GetInt32(0);
+                                Console.WriteLine("Total Contacts From City Latur And State Maharashtra : ", +count);                                
+                            }
+                            if (reader.NextResult())
+                            {
+                                while (reader.Read())
+                                {
+                                    int count = reader.GetInt32(0);
+                                    Console.WriteLine("Total Contacts From City Pune And State Maharashtra : ",+count);
+                                }
+                            }
+                        }
+                        connection.Close();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
