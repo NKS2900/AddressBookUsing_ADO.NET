@@ -28,17 +28,34 @@ namespace AddressBookUsing_ADO.NET
                 Console.WriteLine("Some problem is there...");
 
             AddressBookModel abmodel1 = new AddressBookModel();
-            abmodel1.First_Name = "Dipak";
-            abmodel1.Last_Name = "Nagar";
-            abmodel1.City = "Latur";
+            abmodel1.First_Name = "Asif";
+            abmodel1.Last_Name = "Shaikh";
+            abmodel1.Address = "mainRoad";
+            abmodel1.City = "Beed";
             abmodel1.State = "Maharashtra";
-            abmodel1.Email = "dpk@gmail.com";
+            abmodel1.Zip = "145263";
+            abmodel1.Phone_Number = "9876532147";
+            abmodel1.Email = "asif@gmail.com";
             abmodel1.BookName = "address002";
-            abmodel1.AddressbookType = "office";
-            abrepo.EditContactUsingFirstName(abmodel1);
+            abmodel1.AddressbookType = "family";
+            bool result1 = abrepo.AddContact(abmodel1);
+            if (result1)
+                Console.WriteLine("Record added successfully...");
+            else
+                Console.WriteLine("Some problem is there...");
+
+            AddressBookModel editModel = new AddressBookModel();
+            editModel.First_Name = "Dipak";
+            editModel.Last_Name = "Nagar";
+            editModel.City = "Latur";
+            editModel.State = "Maharashtra";
+            editModel.Email = "dpk@gmail.com";
+            editModel.BookName = "address002";
+            editModel.AddressbookType = "office";
+            abrepo.EditContactUsingFirstName(editModel);
 
             AddressBookModel delmodel = new AddressBookModel();
-            delmodel.First_Name = "Ganesh";
+            delmodel.First_Name = "Asif";
             abrepo.DeleteContactUsingName(delmodel);
 
             abrepo.RetrieveContactFromPerticularCityOrState();
@@ -48,6 +65,5 @@ namespace AddressBookUsing_ADO.NET
             Console.ReadKey();
 
         }
-
     }
 }
